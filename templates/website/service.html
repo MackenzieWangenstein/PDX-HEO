@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ service }}{% endblock %}
+
+{% block content %}
+  Name: {{ service }} <br>
+  Description: {{ service.description }} <br>
+  Address: {{ service.address }} <br>
+  Hours: {{ service.hours_open }} - {{ service.hours_close }} <br>
+  PhoneNumber: {{ shelter.phone }} <br>
+{% endblock %}

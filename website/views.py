@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import loader
 from django.views import generic
 
-from .models import Shelter
+from .models import Service
 from .models import Organization
 
 
@@ -30,10 +30,10 @@ def about(request):
 
 class FinderView(generic.ListView):
   template_name = 'website/finder.html'
-  context_object_name = 'shelter_list'
+  context_object_name = 'service_list'
 
   def get_queryset(self):
-    return Shelter.objects.order_by('name')[:10]
+    return Service.objects.order_by('name')[:10]
 
 
 class OrganizationView(generic.DetailView):
@@ -41,6 +41,6 @@ class OrganizationView(generic.DetailView):
   template_name = 'website/organization.html'
 
 
-class ShelterView(generic.DetailView):
-  model = Shelter
-  template_name = 'website/shelter.html'
+class ServiceView(generic.DetailView):
+  model = Service
+  template_name = 'website/service.html'

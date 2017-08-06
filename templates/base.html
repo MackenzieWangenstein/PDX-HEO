@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="{{ page_title }}">
@@ -8,35 +9,34 @@
 
   <title>PDX-HEO | {% block title %}{% endblock %}</title>
   {% load static %}
-  <link rel="stylesheet" type="text/css" href="{% static 'website/style.css' %}"/>
+  {% load forum_tags %}
+ <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+ <link rel="stylesheet" href="{% static 'build/css/pdxheo.css' %}">
 </head>
+
 <body>
-<header>
-  <h1><a href="/">PDX-HEO</a></h1>
-  <nav>
-    <a href="{% url 'finder' %}">Resource Finder</a> |
-    <a href="{% url 'community_board' %}">Community Board</a> |
-    <a href="{% url 'testimonies' %}">Testimonies</a> |
-    <a href="{% url 'safety_map' %}">Safety Map</a> |
-    <a href="{% url 'about' %}">About</a> |
-    {% if user.is_authenticated %}
-      <a href="/admin/">Admin</a> |
-      <a href="{% url 'logout' %}">Logout</a>
-    {% else %}
-      <a href="{% url 'login' %}">Login</a> |
-      <a href="{% url 'register' %}">Register</a>
-    {% endif %}
-  </nav>
-</header>
 
-<hr>
+  {% block header %}
 
-<main>
+    <div class="menu-custom pure-menu pure-menu-horizontal">
+    <a href="/" class="pure-menu-heading link-custom-heading pure-menu-link">PDX-HEO</a>
+    <ul class="pure-menu-list">
+        <li class="pure-menu-item"><a href="{% url 'finder' %}" class="link-custom pure-menu-link">Resource Finder</a></li>
+        <li class="pure-menu-item"><a href="{% url 'forum:index' %}" class="link-custom pure-menu-link">Community Board</a></li>
+        <li class="pure-menu-item"><a href="{% url 'testimonies' %}" class="link-custom pure-menu-link">Testimonies</a></li>
+        <li class="pure-menu-item"><a href="{% url 'safety_map' %}" class="link-custom pure-menu-link">Safety Map</a></li>
+        <li class="pure-menu-item"><a href="{% url 'about' %}" class="link-custom pure-menu-link">About</a></li>
+    </ul>
+</div>
+
+{% endblock header %}
+
+<div class="container" id="main_container">
   <div>
     {% block content %}
     {% endblock %}
   </div>
-</main>
+</div>
 
 <footer>
   <div>

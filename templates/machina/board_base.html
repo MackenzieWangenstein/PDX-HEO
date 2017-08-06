@@ -1,0 +1,85 @@
+{% extends MACHINA_BASE_TEMPLATE_NAME %}
+{% load static %}
+{% load i18n %}
+{% load forum_permission_tags %}
+
+{% block title %}{{ MACHINA_FORUM_NAME|default:"Forum" }} &mdash; {% block sub_title %}{% endblock sub_title %}{% endblock title %}
+
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'css/machina.board_theme.vendor.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/machina.board_theme.min.css' %}" />
+<link rel="stylesheet" href="{% static 'build/css/pdxheo.css' %}">
+
+{% endblock css %}
+
+{% block body %}
+{% block header %}
+<div class="menu-custom pure-menu pure-menu-horizontal">
+<a href="/" class="pure-menu-heading link-custom-heading pure-menu-link">PDX-HEO</a>
+<ul class="pure-menu-list">
+    <li class="pure-menu-item"><a href="{% url 'finder' %}" class="link-custom pure-menu-link">Resource Finder</a></li>
+    <li class="pure-menu-item"><a href="{% url 'forum:index' %}" class="link-custom pure-menu-link">Community Board</a></li>
+    <li class="pure-menu-item"><a href="{% url 'testimonies' %}" class="link-custom pure-menu-link">Testimonies</a></li>
+    <li class="pure-menu-item"><a href="{% url 'safety_map' %}" class="link-custom pure-menu-link">Safety Map</a></li>
+    <li class="pure-menu-item"><a href="{% url 'about' %}" class="link-custom pure-menu-link">About</a></li>
+</ul>
+</div>
+
+{% endblock header %}
+<div class="container" id="main_container">
+
+
+  <div class="row">
+    <div class="col-xs-12">
+      {% block breadcrumb %}{% include "partials/breadcrumb.html" %}{% endblock breadcrumb %}
+
+      <div class="pull-right controls-link-wrapper">
+      {% if not request.user.is_anonymous %}
+
+        <a href="{% url 'forum_member:user_subscriptions' %}" class="btn btn-link"><i class="fa fa-bookmark-o ">&nbsp;</i>{% trans "Subscriptions" %}</a>
+        <a href="{% url 'forum_member:user_posts' request.user.id %}" class="btn btn-link"><i class="fa fa-comments-o ">&nbsp;</i>{% trans "View my messages" %}</a>
+        <a href="{% url 'forum_search:search' %}" class="btn btn-link">{% trans "Advanced search" %}</a>
+
+      {% endif %}
+      {% get_permission 'can_access_moderation_queue' request.user as can_access_moderation_queue %}
+      {% if can_access_moderation_queue %}
+        <a href="{% url 'forum_moderation:queue' %}" class="btn btn-link"><i class="fa fa-gavel">&nbsp;</i>{% trans "Moderation queue" %}</a>
+      {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <form class="navbar-form form-inline" role="search" action="{% url 'forum_search:search' %}" style="align:right">
+          <div class="form-group col-sm-6 col-md-7">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="{% trans 'Search...' %}" name="q">
+              <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+    <div class="col-xs-12">
+      <br />
+      {% block messages %}{% include "partials/messages.html" %}{% endblock messages %}
+    </div>
+  </div>
+  {% block content %}
+  {% endblock content %}
+</div>
+{% endblock body %}
+
+{% block js %}
+{{ block.super }}
+<script src="{% static 'js/machina.packages.min.js' %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static 'js/machina.min.js' %}" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+  $(function() {
+    machina.init();
+    {% block onbodyload %}{% endblock onbodyload %}
+  });
+</script>
+{% endblock js %}

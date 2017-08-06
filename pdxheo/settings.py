@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from machina import get_apps as get_machina_apps
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -36,10 +38,13 @@ INSTALLED_APPS = [
   'django.contrib.messages',
   'django.contrib.staticfiles',
   'website.apps.WebsiteConfig',
-  'user.apps.UserConfig',
-  'api.apps.ApiConfig',
   'rest_framework',
-]
+
+  #machina related apps:
+  'mptt',
+  'haystack',
+  'widget_tweaks',
+] + get_machina_apps()
 
 MIDDLEWARE = [
   'django.middleware.security.SecurityMiddleware',
@@ -49,26 +54,99 @@ MIDDLEWARE = [
   'django.contrib.auth.middleware.AuthenticationMiddleware',
   'django.contrib.messages.middleware.MessageMiddleware',
   'django.middleware.clickjacking.XFrameOptionsMiddleware',
+     # Machina
+  'machina.apps.forum_permission.middleware.ForumPermissionMiddleware',
 ]
+
+HAYSTACK_CONNECTIONS = {
+  'default': {
+    'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+  },
+}
 
 ROOT_URLCONF = 'pdxheo.urls'
 
+# from machina import MACHINA_MAIN_TEMPLATE_DIR
+# TEMPLATES = [
+#   {
+#     'BACKEND': 'django.template.backends.django.DjangoTemplates',
+#     'DIRS':( [os.path.join(BASE_DIR, 'templates')],
+#         MACHINA_MAIN_TEMPLATE_DIR,
+#     ),
+#    # 'APP_DIRS': True,
+#     'OPTIONS': {
+#       'context_processors': [
+#         'django.template.context_processors.debug',
+#         'django.template.context_processors.request',
+#         'django.contrib.auth.context_processors.auth',
+#         'django.contrib.messages.context_processors.messages',
+#
+#         #machina
+#         'machina.core.context_processors.metadata',
+#       ],
+#     },
+#   },
+# ]
+
+#TODO: fix template error - follow https://django-machina.readthedocs.io/en/stable/getting_started.html#requirements
+from machina import MACHINA_MAIN_TEMPLATE_DIR
 TEMPLATES = [
   {
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
-    'DIRS': [os.path.join(BASE_DIR, 'templates')]
-    ,
-    'APP_DIRS': True,
+    'DIRS': (
+      os.path.join(BASE_DIR, 'templates'),
+      MACHINA_MAIN_TEMPLATE_DIR,
+    ),
     'OPTIONS': {
       'context_processors': [
+        # ...
         'django.template.context_processors.debug',
         'django.template.context_processors.request',
         'django.contrib.auth.context_processors.auth',
         'django.contrib.messages.context_processors.messages',
+        # Machina
+        'machina.core.context_processors.metadata',
       ],
+      'loaders': [
+          'django.template.loaders.filesystem.Loader',
+          'django.template.loaders.app_directories.Loader',
+      ]
     },
   },
 ]
+
+# TEMPLATES = [
+#   {
+#     'BACKEND': 'django.template.backends.django.DjangoTemplates',
+#     'DIRS': [os.path.join(BASE_DIR, 'templates')]
+#     ,
+#     'APP_DIRS': True,
+#     'OPTIONS': {
+#       'context_processors': [
+#         'django.template.context_processors.debug',
+#         'django.template.context_processors.request',
+#         'django.contrib.auth.context_processors.auth',
+#         'django.contrib.messages.context_processors.messages',
+#       ],
+#     },
+#   },
+# ]
+
+from machina import MACHINA_MAIN_STATIC_DIR
+STATICFILES_DIRS = (
+  # ...
+  MACHINA_MAIN_STATIC_DIR,
+)
+
+CACHES = {
+  'default': {
+    'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+  },
+  'machina_attachments': {
+    'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+    'LOCATION': '/tmp',
+  }
+}
 
 WSGI_APPLICATION = 'pdxheo.wsgi.application'
 
@@ -97,6 +175,10 @@ else:
       'PORT': '',
     }
   }
+
+REST_FRAMEWORK = {
+    'PAGE_SIZE': 10
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators

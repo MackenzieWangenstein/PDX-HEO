@@ -3,11 +3,11 @@
 {% block title %}Shelter Finder{% endblock %}
 
 {% block content %}
-  <p>Welcome to the shelter finder</p>
-  {% if shelter_list %}
+  <p>Welcome to the service finder</p>
+  {% if service_list %}
     <ul>
-      {% for shelter in shelter_list %}
-        <li><a href="{% url 'shelter' shelter.id %}">{{ shelter.name }}</a></li>
+      {% for service in service_list %}
+        <li><a href="{% url 'service' service.id %}">{{ service.name }}</a></li>
       {% endfor %}
     </ul>
   {% else %}

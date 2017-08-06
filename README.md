@@ -90,11 +90,10 @@ Leading Contributers:
 	- Andy Mayer
 	- Chitradevi Maruthavanan
 	
-	
+
 Week 3 Report:
        - Current Project status:
-             Database complete and website layout has been established. Currently the project is in the process of getting a Rest API setup using the Django REST Framework. The next steps for the project is to introduce javascript and css to the project so we can start fine tuning the look of the website. Back end logic is still needed to introduce the features that we are looking to implement such as the resource finder, the testimonies page, and if time permits a community board. If time permits we would like to create an android version of this app and introduce an interactive safety map where users can pinpoint their location and alert others of nearby safety conerns and hazards. This is where we will introduce the safety part of the name Portland Housing Emergancy Outreach and Safety. 
-       - Challenges: 
-           - Project Management: We found it challenging to create an assign issues for the beginning of the project while we were trying to set up the base structure of the application because we were all new to building a web app and using the django framework. Now that we have the database setup and the structure inplace to create webviews, it has been easier to come up with ideas of the work that needs to be done. 
+             Database complete and website layout has been established. Currently the project is in the process of getting a Rest API setup using the Django REST Framework. The next steps for the project is to introduce javascript and css to the project so we can start fine tuning the look of the website. Back end logic is still needed to introduce the features that we are looking to implement such as the resource finder, the testimonies page, and if time permits a community board. If time permits we would like to create an android version of this app and introduce an interactive safety map where users can pinpoint their location and alert others of nearby safety conerns and hazards. This is where we will introduce the safety part of the name Portland Housing Emergancy Outreach and Safety.
+       - Challenges:
+           - Project Management: We found it challenging to create an assign issues for the beginning of the project while we were trying to set up the base structure of the application because we were all new to building a web app and using the django framework. Now that we have the database setup and the structure inplace to create webviews, it has been easier to come up with ideas of the work that needs to be done.
 	   - Project structure/organization challenges need to addressed because of naming conventions used when first drafting the project.
-	   
