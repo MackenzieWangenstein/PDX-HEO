@@ -2,9 +2,16 @@ from django.contrib import admin
 from .models import Organization
 from .models import ServiceType
 from .models import Service
-
+from .models import Testimony
 
 # Register your models here.
+
+class TestimonyAdmin(admin.ModelAdmin):
+    fieldsets = [('Testimony Details', {'fields': ['title', 'story', 'author']})
+    ]
+    list_display = ('title', 'story', 'author')
+    search_fields=('title', 'author')
+
 class ServiceInline(admin.TabularInline):
   model = Service
   extra = 1
@@ -36,3 +43,4 @@ class ServiceAdmin(admin.ModelAdmin):
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(ServiceType)
 admin.site.register(Service, ServiceAdmin)
+admin.site.register(Testimony, TestimonyAdmin)
