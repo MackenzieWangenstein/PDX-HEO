@@ -17,18 +17,3 @@ div.container {
 nav a {
     text-decoration: none;
 }
-
-
-#testimonies-list ul{
-  list-style: none;
-  padding: 100px 100px;
-}
-#testimonies-list li{
-  display: inline;
-}
-
-.testimonies-button a{
-  background: red;
-  height: 100px;
-  width: 200px;
-}

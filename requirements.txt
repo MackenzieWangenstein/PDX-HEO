@@ -2,4 +2,3 @@ Django
 psycopg2
 djangorestframework
 django-machina
-Pillow
